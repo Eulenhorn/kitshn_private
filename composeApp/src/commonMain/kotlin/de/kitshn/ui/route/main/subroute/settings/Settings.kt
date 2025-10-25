@@ -9,7 +9,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.BugReport
 import androidx.compose.material.icons.rounded.Cloud
 import androidx.compose.material.icons.rounded.DeveloperBoard
-import androidx.compose.material.icons.rounded.Diamond
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Tune
@@ -27,10 +26,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.unit.dp
-import de.kitshn.Platforms
 import de.kitshn.crash.crashReportHandler
-import de.kitshn.launchWebsiteHandler
 import de.kitshn.model.SettingsBaseModel
 import de.kitshn.model.SettingsDividerModel
 import de.kitshn.model.SettingsItemModel
@@ -45,14 +41,8 @@ import de.kitshn.ui.view.settings.ViewSettingsAppearance
 import de.kitshn.ui.view.settings.ViewSettingsBehavior
 import de.kitshn.ui.view.settings.ViewSettingsDebug
 import de.kitshn.ui.view.settings.ViewSettingsServer
-import kitshn.composeApp.BuildConfig
 import kitshn.composeapp.generated.resources.Res
 import kitshn.composeapp.generated.resources.common_error_report
-import kitshn.composeapp.generated.resources.ios_support_badge
-import kitshn.composeapp.generated.resources.ios_support_manage_subscription_description
-import kitshn.composeapp.generated.resources.ios_support_manage_subscription_label
-import kitshn.composeapp.generated.resources.kofi_support_description
-import kitshn.composeapp.generated.resources.kofi_support_label
 import kitshn.composeapp.generated.resources.navigation_settings
 import kitshn.composeapp.generated.resources.settings_section_about_description
 import kitshn.composeapp.generated.resources.settings_section_about_label
@@ -73,63 +63,64 @@ fun RouteMainSubrouteSettings(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
     val settingsModelList = remember {
-        mutableStateListOf<SettingsBaseModel>(
-
-        ).apply {
-            if(platformDetails.debug) add(SettingsItemModel(
-                position = SettingsListItemPosition.SINGULAR,
-                id = "DEBUG",
-                icon = Icons.Rounded.DeveloperBoard,
-                contentDescription = "Test experimental settings",
-                label = "Debug settings",
-                description = "Test experimental settings",
-                content = { ViewSettingsDebug(ViewParameters(p.vm, it)) }
-            ))
+        mutableStateListOf<SettingsBaseModel>().apply {
+            if (platformDetails.debug) add(
+                SettingsItemModel(
+                    position = SettingsListItemPosition.SINGULAR,
+                    id = "DEBUG",
+                    icon = Icons.Rounded.DeveloperBoard,
+                    contentDescription = "Test experimental settings",
+                    label = "Debug settings",
+                    description = "Test experimental settings",
+                    content = { ViewSettingsDebug(ViewParameters(p.vm, it)) }
+                )
+            )
         }
     }
 
     val crashReportHandler = crashReportHandler()
-    val launchWebsiteHandler = launchWebsiteHandler()
 
     LaunchedEffect(Unit) {
-        settingsModelList.addAll(listOf(
-            SettingsItemModel(
-                position = SettingsListItemPosition.SINGULAR,
-                id = "SERVER",
-                icon = Icons.Rounded.Cloud,
-                contentDescription = getString(Res.string.settings_section_server_description),
-                label = getString(Res.string.settings_section_server_label),
-                description = getString(Res.string.settings_section_server_description),
-                content = { ViewSettingsServer(ViewParameters(p.vm, it)) }
-            ),
-            SettingsItemModel(
-                position = SettingsListItemPosition.TOP,
-                id = "APPEARANCE",
-                icon = Icons.Rounded.Palette,
-                contentDescription = getString(Res.string.settings_section_appearance_description),
-                label = getString(Res.string.settings_section_appearance_label),
-                description = getString(Res.string.settings_section_appearance_description),
-                content = { ViewSettingsAppearance(ViewParameters(p.vm, it)) }
-            ),
-            SettingsItemModel(
-                position = SettingsListItemPosition.BOTTOM,
-                id = "BEHAVIOR",
-                icon = Icons.Rounded.Tune,
-                contentDescription = getString(Res.string.settings_section_behavior_description),
-                label = getString(Res.string.settings_section_behavior_label),
-                description = getString(Res.string.settings_section_behavior_description),
-                content = { ViewSettingsBehavior(ViewParameters(p.vm, it)) }
-            ),
-            SettingsItemModel(
-                position = SettingsListItemPosition.SINGULAR,
-                id = "ABOUT",
-                icon = Icons.Rounded.Info,
-                contentDescription = getString(Res.string.settings_section_about_description),
-                label = getString(Res.string.settings_section_about_label),
-                description = getString(Res.string.settings_section_about_description),
-                content = { ViewSettingsAbout(ViewParameters(p.vm, it)) }
+        settingsModelList.addAll(
+            listOf(
+                SettingsItemModel(
+                    position = SettingsListItemPosition.SINGULAR,
+                    id = "SERVER",
+                    icon = Icons.Rounded.Cloud,
+                    contentDescription = getString(Res.string.settings_section_server_description),
+                    label = getString(Res.string.settings_section_server_label),
+                    description = getString(Res.string.settings_section_server_description),
+                    content = { ViewSettingsServer(ViewParameters(p.vm, it)) }
+                ),
+                SettingsItemModel(
+                    position = SettingsListItemPosition.TOP,
+                    id = "APPEARANCE",
+                    icon = Icons.Rounded.Palette,
+                    contentDescription = getString(Res.string.settings_section_appearance_description),
+                    label = getString(Res.string.settings_section_appearance_label),
+                    description = getString(Res.string.settings_section_appearance_description),
+                    content = { ViewSettingsAppearance(ViewParameters(p.vm, it)) }
+                ),
+                SettingsItemModel(
+                    position = SettingsListItemPosition.BOTTOM,
+                    id = "BEHAVIOR",
+                    icon = Icons.Rounded.Tune,
+                    contentDescription = getString(Res.string.settings_section_behavior_description),
+                    label = getString(Res.string.settings_section_behavior_label),
+                    description = getString(Res.string.settings_section_behavior_description),
+                    content = { ViewSettingsBehavior(ViewParameters(p.vm, it)) }
+                ),
+                SettingsItemModel(
+                    position = SettingsListItemPosition.SINGULAR,
+                    id = "ABOUT",
+                    icon = Icons.Rounded.Info,
+                    contentDescription = getString(Res.string.settings_section_about_description),
+                    label = getString(Res.string.settings_section_about_label),
+                    description = getString(Res.string.settings_section_about_description),
+                    content = { ViewSettingsAbout(ViewParameters(p.vm, it)) }
+                )
             )
-        ))
+        )
     }
 
     KitshnListDetailPaneScaffold(
@@ -139,18 +130,8 @@ fun RouteMainSubrouteSettings(
                 title = { Text(stringResource(Res.string.navigation_settings)) },
                 colors = it,
                 actions = {
-                    if(p.vm.uiState.iosIsSubscribed) IconButton(
-                        onClick = { }
-                    ) {
-                        Icon(
-                            Icons.Rounded.Diamond, stringResource(Res.string.ios_support_badge)
-                        )
-                    }
-
-                    if(crashReportHandler != null) IconButton(
-                        onClick = {
-                            crashReportHandler(null)
-                        }
+                    if (crashReportHandler != null) IconButton(
+                        onClick = { crashReportHandler(null) }
                     ) {
                         Icon(
                             Icons.Rounded.BugReport,
@@ -163,7 +144,8 @@ fun RouteMainSubrouteSettings(
         },
         listContent = { pv, selectedId, supportsMultiplePanes, _, select ->
             Column(
-                Modifier.padding(pv)
+                Modifier
+                    .padding(pv)
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
@@ -175,9 +157,9 @@ fun RouteMainSubrouteSettings(
                     items(settingsModelList.size) { index ->
                         val model = settingsModelList[index]
 
-                        if(model is SettingsDividerModel) {
+                        if (model is SettingsDividerModel) {
                             HorizontalDivider()
-                        } else if(model is SettingsItemModel) {
+                        } else if (model is SettingsItemModel) {
                             SettingsListItem(
                                 position = model.position,
                                 icon = model.icon,
@@ -192,36 +174,12 @@ fun RouteMainSubrouteSettings(
                         }
                     }
                 }
-
-                if(platformDetails.platform == Platforms.IOS) {
-                    SettingsListItem(
-                        position = SettingsListItemPosition.SINGULAR,
-                        modifier = Modifier.padding(bottom = 8.dp),
-                        icon = Icons.Rounded.Diamond,
-                        label = { Text(stringResource(Res.string.ios_support_manage_subscription_label)) },
-                        description = { Text(stringResource(Res.string.ios_support_manage_subscription_description)) },
-                        contentDescription = stringResource(Res.string.ios_support_manage_subscription_description)
-                    ) {
-                        p.vm.navigateTo("iOS/manageSubscription")
-                    }
-                } else {
-                    SettingsListItem(
-                        position = SettingsListItemPosition.SINGULAR,
-                        modifier = Modifier.padding(bottom = 8.dp),
-                        icon = Icons.Rounded.Diamond,
-                        label = { Text(stringResource(Res.string.kofi_support_label)) },
-                        description = { Text(stringResource(Res.string.kofi_support_description)) },
-                        contentDescription = stringResource(Res.string.kofi_support_description)
-                    ) {
-                        launchWebsiteHandler(BuildConfig.FUNDING_KOFI)
-                    }
-                }
             }
         }
     ) { selectedId, _, _, _, _, back ->
-        for(item in settingsModelList) {
-            if(item !is SettingsItemModel) continue
-            if(selectedId != item.id) continue
+        for (item in settingsModelList) {
+            if (item !is SettingsItemModel) continue
+            if (selectedId != item.id) continue
 
             item.content(back)
             break

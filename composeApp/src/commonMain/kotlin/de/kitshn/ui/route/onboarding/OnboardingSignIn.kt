@@ -126,8 +126,8 @@ fun RouteOnboardingSignIn(
 
     val coroutineScope = rememberCoroutineScope()
 
-    var instanceUrlValue by rememberSaveable { mutableStateOf("https://app.tandoor.dev") }
-    var instanceUrlDisplayValue by rememberSaveable { mutableStateOf("https://app.tandoor.dev") }
+    var instanceUrlValue by rememberSaveable { mutableStateOf("http://kochbuch.int/") }
+    var instanceUrlDisplayValue by rememberSaveable { mutableStateOf("http://kochbuch.int/") }
     var instanceUrlState by rememberSaveable { mutableStateOf(ErrorLoadingSuccessState.SUCCESS) }
     var instanceUrlV1Error by rememberSaveable { mutableStateOf(false) }
     val instanceUrlFocusRequester = remember { FocusRequester() }
@@ -292,7 +292,7 @@ fun RouteOnboardingSignIn(
                                 .focusRequester(instanceUrlFocusRequester),
 
                             label = { Text(stringResource(Res.string.common_instance_url)) },
-                            placeholder = { Text("https://app.tandoor.dev") },
+                            placeholder = { Text("http://kochbuch.int/") },
                             leadingIcon = {
                                 Icon(
                                     Icons.Rounded.Web,
